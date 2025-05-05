@@ -4,18 +4,48 @@ namespace App\Http\Controllers;
 
 use App\Models\Aspirasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AspirasiController extends Controller
 {
     public function aspirasi()
     {
-         // Data dummy (tanpa database)
-         $aspirasis = [
-            ['id' => 1, 'unit' => 'Akademik', 'isi' => 'Mohon diperbaiki jaringan WiFi di lantai 2.', 'status' => 'terkonfirmasi'],
-            ['id' => 2, 'unit' => 'Sarana dan Prasarana', 'isi' => 'Perlu penambahan tempat duduk di taman kampus.', 'status' => 'terkonfirmasi'],
-            ['id' => 3, 'unit' => 'PPKS', 'isi' => 'Kantin kurang bersih, mohon ditindaklanjuti. Seharusnya pihak kampus dapat memperbaiki dengan lebih optimal.', 'status' => 'diproses'],
-            ['id' => 4, 'unit' => 'Sarana dan Prasarana', 'isi' => 'Tempat wudu yang kurang optimal dalam pengembangannya.', 'status' => 'diproses'],
-        ];
-        return view('mahasiswa.aspirasi', compact('aspirasis'));
+                // Ambil data dari API (contoh: internal REST API lokal)
+                $response = Http::get('http://localhost:8080/aspirasi');
+
+                // Cek kalau berhasil
+                if ($response->successful()) {
+                    $aspirasis = $response->json(); // ambil data JSON dari API
+                } else {
+                    $aspirasis = []; // fallback kalau gagal
+                }
+        return view('mahasiswa.aspirasi', [
+            'aspirasis' => $aspirasis
+        ]);
+    }
+
+    public function tambah(){
+        $response = Http::get('http://localhost:8080/unit');
+        if ($response->successful()) {
+            $unit = $response->json(); // ambil data JSON dari API
+        } else {
+            $unit = []; // fallback kalau gagal
+        }
+        return view('mahasiswa.tambahAspirasi',[
+            'unit' => $unit
+        ]);
+    }
+
+    public function tambahAspirasi(Request $request){
+        $validate = $request->validate([
+            'mahasiswa_nim' => 'required',
+            'isi' => 'required',
+            'unit_id' => 'required'
+        ]);
+
+        $validate['status']  = 'belum diproses';
+
+        Http::post('http://localhost:8080/aspirasi', $validate);
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 }

@@ -41,6 +41,8 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 
 // Form Aspirasi
 Route::get('/aspirasi', [AspirasiController::class, 'aspirasi'])->name('aspirasi');
+Route::get('/tambah', [AspirasiController::class, 'tambah'])->name('tambah');
+Route::post('/aspirasi', [AspirasiController::class, 'tambahAspirasi'])->name('tambahAspirasi');
 
 
 // ROUTE ADMIN
