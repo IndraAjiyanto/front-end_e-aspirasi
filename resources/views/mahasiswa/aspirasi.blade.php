@@ -77,7 +77,7 @@
             <a href="{{route('editAspirasi', $aspirasi['id'] )}}" class="btn btn-warning btn-sm">
             <i class="bi bi-pencil-square"></i> Edit </a>
 
-            <form action="/aspirasi/delete/{{ $aspirasi['id'] }}" method="POST">
+            <form action="{{route('hapusAspirasi', $aspirasi['id'])}}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus aspirasi ini?')">

@@ -67,7 +67,7 @@ class AspirasiController extends Controller
             'unit' => $unit]);
     }
 
-    public function updateAspirasi(Request $request){
+    public function updateAspirasi(Request $request, $id){
         $validate = $request->validate([
             'mahasiswa_nim' => 'required',
             'isi' => 'required',
@@ -76,7 +76,16 @@ class AspirasiController extends Controller
 
         $validate['status']  = 'belum diproses';
 
-        Http::put('http://localhost:8080/aspirasi', $validate);
-        return redirect()->back()->with('success', 'Data berhasil diedit!');
+        Http::put("http://localhost:8080/aspirasi/{$id}", $validate);
+        return redirect()->route('aspirasi')->with('success', 'Data berhasil diedit!');
     } 
+
+    public function hapusAspirasi($id){
+        $respon = Http::delete("http://localhost:8080/aspirasi/{$id}");
+        if($respon->status() === 404){
+        return redirect()->route('aspirasi')->with('error', 'Data tidak ditemukan');
+        } else {
+        return redirect()->route('aspirasi')->with('success', 'Data berhasil dihapus!');
+        }
+    }
 }

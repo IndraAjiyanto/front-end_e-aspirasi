@@ -45,6 +45,7 @@ Route::get('/tambah', [AspirasiController::class, 'tambah'])->name('tambah');
 Route::post('/aspirasi', [AspirasiController::class, 'tambahAspirasi'])->name('tambahAspirasi');
 Route::get('/aspirasi/{id}', [AspirasiController::class, 'editAspirasi'])->name('editAspirasi');
 Route::put('/aspirasi/{id}', [AspirasiController::class, 'updateAspirasi'])->name('updateAspirasi');
+Route::delete('/aspirasi/{id}', [AspirasiController::class, 'hapusAspirasi'])->name('hapusAspirasi');
 
 
 // ROUTE ADMIN
