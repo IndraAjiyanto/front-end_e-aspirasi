@@ -45,8 +45,13 @@ class AspirasiController extends Controller
 
         $validate['status']  = 'belum diproses';
 
-        Http::post('http://localhost:8080/aspirasi', $validate);
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
+        $response = Http::post('http://localhost:8080/aspirasi', $validate);
+
+        if ($response->successful()) {
+            return redirect()->route('aspirasi')->with('success', 'Data berhasil ditambahkan!');
+        } elseif ($response->status() === 422) {
+            return redirect()->back()->withErrors($response->json('errors'))->withInput();
+        }  
     }
 
     public function editAspirasi($id){

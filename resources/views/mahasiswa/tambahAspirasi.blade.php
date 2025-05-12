@@ -33,8 +33,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="isi" class="form-label">NIM mahasiswa</label>
-                                <input type="text" id="mahasiswa_nim" name="mahasiswa_nim" rows="4" class="form-control" required>
+                                <input type="text" id="mahasiswa_nim" name="mahasiswa_nim" rows="4" class="form-control @error('mahasiswa_nim') is-invalid @enderror" value="{{ old('mahasiswa_nim') }}" required>
+                                @error('mahasiswa_nim')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
 
                             <button class="btn btn-primary" id="submitAspirasi" type="submit"><i class="bi bi-send-plus">Simpan</i></button>
                         </form>
