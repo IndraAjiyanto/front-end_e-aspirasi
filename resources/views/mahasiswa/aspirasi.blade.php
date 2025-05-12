@@ -38,7 +38,7 @@
             <i class="bi bi-arrow-left"></i> Kembali ke Menu Awal
             </a>
 
-            <a href="{{route('tambah')}}" class="btn btn-outline-primary btn-sm">
+            <a href="{{route('aspirasi.create')}}" class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-plus-circle">Tambah Aspirasi</i> 
     </a> 
         </div>
@@ -74,10 +74,10 @@
                     <p>{{ $aspirasi['isi'] }}</p>
 
             <div class="mt-3 d-flex gap-2">
-            <a href="{{route('editAspirasi', $aspirasi['id'] )}}" class="btn btn-warning btn-sm">
+            <a href="{{route('aspirasi.edit', $aspirasi['id'] )}}" class="btn btn-warning btn-sm">
             <i class="bi bi-pencil-square"></i> Edit </a>
 
-            <form action="{{route('hapusAspirasi', $aspirasi['id'])}}" method="POST">
+            <form action="{{route('aspirasi.destroy', $aspirasi['id'])}}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus aspirasi ini?')">

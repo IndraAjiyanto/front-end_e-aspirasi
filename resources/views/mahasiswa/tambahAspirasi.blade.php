@@ -16,7 +16,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body"> -->
-                        <form id="aspirasiForm" action="{{route('tambahAspirasi')}}" method="post">
+                        <form id="aspirasiForm" action="{{route('aspirasi.store')}}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="unit" class="form-label">Pilih Unit</label>

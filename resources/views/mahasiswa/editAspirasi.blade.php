@@ -16,7 +16,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body"> -->
-                        <form id="aspirasiForm" action="{{route('updateAspirasi', $aspirasi['id'])}}" method="post">
+                        <form id="aspirasiForm" action="{{route('aspirasi.update', $aspirasi['id'])}}" method="post">
                             @method('PUT')
                             @csrf
                             <div class="mb-3">

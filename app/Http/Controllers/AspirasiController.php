@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class AspirasiController extends Controller
 {
-    public function aspirasi()
+    public function index()
     {
                 // Ambil data dari API (contoh: internal REST API lokal)
                 $response = Http::get('http://localhost:8080/aspirasi');
@@ -24,7 +24,7 @@ class AspirasiController extends Controller
         ]);
     }
 
-    public function tambah(){
+    public function create(){
         $response = Http::get('http://localhost:8080/unit');
         if ($response->successful()) {
             $unit = $response->json(); // ambil data JSON dari API
@@ -36,7 +36,7 @@ class AspirasiController extends Controller
         ]);
     }
 
-    public function tambahAspirasi(Request $request){
+    public function store(Request $request){
         $validate = $request->validate([
             'mahasiswa_nim' => 'required',
             'isi' => 'required',
@@ -48,13 +48,13 @@ class AspirasiController extends Controller
         $response = Http::post('http://localhost:8080/aspirasi', $validate);
 
         if ($response->successful()) {
-            return redirect()->route('aspirasi')->with('success', 'Data berhasil ditambahkan!');
+            return redirect()->route('aspirasi.index')->with('success', 'Data berhasil ditambahkan!');
         } elseif ($response->status() === 422) {
             return redirect()->back()->withErrors($response->json('errors'))->withInput();
         }  
     }
 
-    public function editAspirasi($id){
+    public function edit($id){
         $response_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}/edit");
         $response_unit = Http::get('http://localhost:8080/unit');
 
@@ -67,7 +67,7 @@ class AspirasiController extends Controller
             'unit' => $unit]);
     }
 
-    public function updateAspirasi(Request $request, $id){
+    public function update(Request $request, $id){
         $validate = $request->validate([
             'mahasiswa_nim' => 'required',
             'isi' => 'required',
@@ -77,15 +77,15 @@ class AspirasiController extends Controller
         $validate['status']  = 'belum diproses';
 
         Http::put("http://localhost:8080/aspirasi/{$id}", $validate);
-        return redirect()->route('aspirasi')->with('success', 'Data berhasil diedit!');
+        return redirect()->route('aspirasi.index')->with('success', 'Data berhasil diedit!');
     } 
 
-    public function hapusAspirasi($id){
+    public function destroy($id){
         $respon = Http::delete("http://localhost:8080/aspirasi/{$id}");
         if($respon->status() === 404){
-        return redirect()->route('aspirasi')->with('error', 'Data tidak ditemukan');
+        return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
         } else {
-        return redirect()->route('aspirasi')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('aspirasi.index')->with('success', 'Data berhasil dihapus!');
         }
     }
 }
