@@ -74,12 +74,8 @@
                     <p>{{ $aspirasi['isi'] }}</p>
 
             <div class="mt-3 d-flex gap-2">
-            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAspirasiModal"
-            data-id="{{ $aspirasi['id'] }}"
-            data-unit="{{ $aspirasi['unit_nama'] }}"
-            data-isi="{{ $aspirasi['isi'] }}">
-            <i class="bi bi-pencil-square"></i> Edit
-            </button>
+            <a href="{{route('editAspirasi', $aspirasi['id'] )}}" class="btn btn-warning btn-sm">
+            <i class="bi bi-pencil-square"></i> Edit </a>
 
             <form action="/aspirasi/delete/{{ $aspirasi['id'] }}" method="POST">
             @csrf
@@ -100,40 +96,6 @@
             </div>
             </div>
             @endforeach
-        </div>
-    </div>
-
-    <!-- Modal Edit Aspirasi -->
-    <div class="modal fade" id="editAspirasiModal" tabindex="-1" aria-labelledby="editAspirasiModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Aspirasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editAspirasiForm">
-                        <input type="hidden" id="edit-id" name="unit_id">
-                        <div class="mb-3">
-                            <label for="edit-unit" class="form-label">Pilih Unit</label>
-                            <select id="edit-unit" class="form-select" required>
-                                <option value="akademik">Akademik</option>
-                                <option value="sarana_prasarana">Sarana dan Prasarana</option>
-                                <option value="ppks">PPKS</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-isi" class="form-label">Isi Aspirasi</label>
-                            <textarea name="isi" id="edit-isi" rows="4" class="form-control" placeholder="Edit aspirasi kamu..." required></textarea>
-                        </div>
-                    </form>
-                    <div class="alert alert-warning d-none" id="editAlert">Harap isi semua field!</div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button class="btn btn-primary" id="submitEditAspirasi"><i class="bi bi-save2"></i> Simpan</button>
-                </div>
-            </div>
         </div>
     </div>
 

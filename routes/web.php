@@ -43,6 +43,8 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::get('/aspirasi', [AspirasiController::class, 'aspirasi'])->name('aspirasi');
 Route::get('/tambah', [AspirasiController::class, 'tambah'])->name('tambah');
 Route::post('/aspirasi', [AspirasiController::class, 'tambahAspirasi'])->name('tambahAspirasi');
+Route::get('/aspirasi/{id}', [AspirasiController::class, 'editAspirasi'])->name('editAspirasi');
+Route::put('/aspirasi/{id}', [AspirasiController::class, 'updateAspirasi'])->name('updateAspirasi');
 
 
 // ROUTE ADMIN

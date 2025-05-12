@@ -48,4 +48,30 @@ class AspirasiController extends Controller
         Http::post('http://localhost:8080/aspirasi', $validate);
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
+
+    public function editAspirasi($id){
+        $response_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}/edit");
+        $response_unit = Http::get('http://localhost:8080/unit');
+
+        $aspirasi = $response_aspirasi->json();
+        $unit = $response_unit->json();
+        
+    
+        return view('mahasiswa.editAspirasi', [
+            'aspirasi' => $aspirasi, 
+            'unit' => $unit]);
+    }
+
+    public function updateAspirasi(Request $request){
+        $validate = $request->validate([
+            'mahasiswa_nim' => 'required',
+            'isi' => 'required',
+            'unit_id' => 'required'
+        ]);
+
+        $validate['status']  = 'belum diproses';
+
+        Http::put('http://localhost:8080/aspirasi', $validate);
+        return redirect()->back()->with('success', 'Data berhasil diedit!');
+    } 
 }
