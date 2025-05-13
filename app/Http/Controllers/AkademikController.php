@@ -3,74 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AkademikController extends Controller
 {
     public function Akademik()
     {
-        // Menambahkan status terbalas ke setiap aspirasi
-        $akademik = [
-            (object) [
-                'id' => 1,
-                'judul' => 'Perbaikan Sistem Pembayaran',
-                'isi' => 'Aspirasi ini bertujuan untuk memperbaiki sistem pembayaran yang lambat dan tidak transparan.',
-                'unit' => 'akademik',
-                'status' => 'terbalas', // Menambahkan status
-            ],
-            (object) [
-                'id' => 2,
-                'judul' => 'Pengadaan Wi-Fi di Ruang Kelas',
-                'isi' => 'Mengusulkan pengadaan Wi-Fi yang stabil di semua ruang kelas untuk mendukung pembelajaran online.',
-                'unit' => 'akademik',
-                'status' => 'diproses', // Status belum terbalas
-            ],
-            (object) [
-                'id' => 3,
-                'judul' => 'Peningkatan Fasilitas Perpustakaan',
-                'isi' => 'Usulan untuk meningkatkan fasilitas dan koleksi buku di perpustakaan agar lebih lengkap.',
-                'unit' => 'akademik',
-                'status' => 'terbalas', // Menambahkan status
-            ]
-        ];
+        $respon = Http::get('http://localhost:8080/aspirasi/akademik/2');
+        $akademik = $respon->json();
 
-        return view('admin.akademik', [
+        return view('admin.akademik.akademik', [
             'akademik' => $akademik,
         ]);
     }
 
-    public function show($id)
+    public function lihat($id)
     {
-        $akademik = [
-            (object) [
-                'id' => 1,
-                'judul' => 'Perbaikan Sistem Pembayaran',
-                'isi' => 'Aspirasi ini bertujuan untuk memperbaiki sistem pembayaran yang lambat dan tidak transparan.',
-                'unit' => 'akademik',
-                'status' => 'diproses', // Menambahkan status
-            ],
-            (object) [
-                'id' => 2,
-                'judul' => 'Pengadaan Wi-Fi di Ruang Kelas',
-                'isi' => 'Mengusulkan pengadaan Wi-Fi yang stabil di semua ruang kelas untuk mendukung pembelajaran online.',
-                'unit' => 'akademik',
-                'status' => 'diproses', // Status belum terbalas
-            ],
-            (object) [
-                'id' => 3,
-                'judul' => 'Peningkatan Fasilitas Perpustakaan',
-                'isi' => 'Usulan untuk meningkatkan fasilitas dan koleksi buku di perpustakaan agar lebih lengkap.',
-                'unit' => 'akademik',
-                'status' => 'terbalas', // Menambahkan status
-            ]
-        ];
+        $respon = Http::get("http://localhost:8080/aspirasi/{$id}");
+        $aspirasi = $respon->json();
+        return view('admin.akademik.lihat_akademik', [
+            'aspirasi' => $aspirasi['aspirasi']
+        ]);
+    }
 
-        // Cari aspirasi berdasarkan ID
-        $aspirasi = collect($akademik)->firstWhere('id', $id);
+    public function balas(Request $request, $id){
+        $validate = $request->validate([
+            'isi' => 'required'
+        ]);
 
-        if (!$aspirasi) {
-            return abort(404, 'Aspirasi tidak ditemukan.');
-        }
+        $validate['status']  = 'dibalas';
+        $validate['aspirasi_id']  = $id;
 
-        return view('admin.lihat_akademik', compact('aspirasi'));
+        Http::post("http://localhost:8080/jawaban", $validate);
+        return redirect()->route('aspirasi.akademik');
     }
 }

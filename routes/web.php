@@ -37,27 +37,31 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::get('/navbar', [NavbarController::class, 'navbar'])->name('navbar.form');
 
 // Menampilkan form register
-Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 
 
 Route::get('/aspirasi/akademik', [AkademikController::class, 'akademik'])->name('aspirasi.akademik');
+Route::get('/aspirasi/lihat/{id}', [AkademikController::class, 'lihat'])->name('aspirasi.akademik.lihat');
+Route::post('/aspirasi/balas/{id}', [AkademikController::class, 'balas'])->name('aspirasi.akademik.balas');
 
-// Aspirasi
-Route::resource('aspirasi', AspirasiController::class);
+
 
 
 // ROUTE ADMIN
 Route::get('/dashboard', [AdminDasboardController::class, 'index'])->name('dashboard');
 
 //aspirasi akademik
-Route::get('/aspirasi/lihatakademik', [LihatAkademikController::class, 'lihatakademik']);
+
 
 //aspirasi ppks
 Route::get('/aspirasi/ppks', [PpksController::class, 'ppks']);
 //lihat aspirasi ppks
-Route::get('/aspirasi/lihatppks', [LihatPpksController::class, 'lihatppks']);
+Route::get('/aspirasi/lihatppks', [PpksController::class, 'lihatppks']);
 
 //aspirasi sarana prasarana
 Route::get('/aspirasi/sarpras', [SaranaPrasaranaController::class, 'Sarpras']);
 //lihat sarpras
-Route::get('/aspirasi/lihatsarpras', [LihatSaranaPrasaranaController::class, 'lihatsarpras']);
+Route::get('/aspirasi/lihatsarpras', [SaranaPrasaranaController::class, 'lihatsarpras']);
+
+// Aspirasi
+Route::resource('aspirasi', AspirasiController::class);

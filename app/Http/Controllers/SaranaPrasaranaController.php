@@ -62,6 +62,16 @@ class SaranaPrasaranaController extends Controller
 
         return view('admin.lihat_sarpras', compact('aspirasi'));
     }
+
+    public function lihatSarpras()
+    {
+        $lihatSarpras = [
+            'id' => 1, 
+            'isi' => 'Tempat parkir kendaraan terlalu sempit dan tidak teratur.',
+        ];
+    
+        return view('admin.lihat_sarpras', compact('lihatSarpras'));
+    }
 }
 
 

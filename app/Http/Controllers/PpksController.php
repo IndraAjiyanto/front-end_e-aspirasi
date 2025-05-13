@@ -73,4 +73,14 @@ class PpksController extends Controller
 
         return view('admin.lihat_ppks', compact('laporan'));
     }
+
+    public function lihatppks()
+    {
+        $lihatppks = [
+            'id' => 1, 
+            'isi' => 'Lampu lorong padam sudah seminggu.',
+        ];
+    
+        return view('admin.lihat_ppks', compact('lihatppks'));
+    }
 }

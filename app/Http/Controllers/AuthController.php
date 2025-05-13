@@ -11,7 +11,12 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        return view('mahasiswa.login');
+        return view('login');
         
     }
+
+         public function showRegisterForm()
+     {
+         return view('mahasiswa.daftar');
+     }
 }
