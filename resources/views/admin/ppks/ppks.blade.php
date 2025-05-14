@@ -66,18 +66,18 @@
     @forelse($ppks as $item)
       <div class="card mb-3 shadow-sm border-0">
         <div class="card-body">
-          <p class="card-text text-secondary">{{ \Illuminate\Support\Str::limit($item->isi, 100) }}</p>
+          <p class="card-text text-secondary">{{ Str::limit($item['isi'], 100) }}</p>
           
           <div class="status-container">
-            <a href="/aspirasi/lihatppks" class="btn btn-outline-primary">
+            <a href="{{route('unit.ppks.lihat', $item['id'])}}" class="btn btn-outline-primary">
               <i class="bi bi-eye-fill me-1"></i> Lihat
             </a>
 
             <!-- Tanda ceklis jika aspirasi sudah terbalas -->
-            @if($item->status == 'terbalas')
+            @if($item['status'] == 'dibalas')
               <i class="bi bi-check-circle status-answered"></i>
             <!-- Tanda jika aspirasi sedang diproses -->
-            @elseif($item->status == 'diproses')
+            @elseif($item['status'] == 'diproses')
               <i class="bi bi-hourglass-split text-warning" style="font-size: 1.5rem;" title="Sedang Diproses"></i>
             @endif
           </div>

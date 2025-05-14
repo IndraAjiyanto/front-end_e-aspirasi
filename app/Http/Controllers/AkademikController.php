@@ -9,7 +9,7 @@ class AkademikController extends Controller
 {
     public function Akademik()
     {
-        $respon = Http::get('http://localhost:8080/unit/aspirasi/2');
+        $respon = Http::get('http://localhost:8080/unit/aspirasi/1');
         $akademik = $respon->json();
 
         return view('admin.akademik.akademik', [
@@ -24,16 +24,5 @@ class AkademikController extends Controller
         return view('admin.akademik.lihat_akademik', [
             'aspirasi' => $aspirasi['aspirasi']
         ]);
-    }
-
-    public function balas(Request $request, $id){
-        $validate = $request->validate([
-            'isi' => 'required'
-        ]);
-
-        $validate['status']  = 'dibalas';
-        $validate['aspirasi_id']  = $id;
-
-        Http::post("http://localhost:8080/jawaban", $validate);
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PpksController;
 use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\JawabanController;
 use App\Http\Controllers\AkademikController;
 use App\Http\Controllers\AspirasiController;
 use App\Http\Controllers\RegisterController;
@@ -41,8 +42,13 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 
 
 Route::get('/unit/akademik', [AkademikController::class, 'akademik'])->name('unit.akademik');
-Route::get('/unit/lihat/{id}', [AkademikController::class, 'lihat'])->name('unit.akademik.lihat');
-Route::post('/aspirasi/balas/{id}', [AkademikController::class, 'balas'])->name('aspirasi.balas');
+Route::get('/unit/akademik/{id}', [AkademikController::class, 'lihat'])->name('unit.akademik.lihat');
+
+Route::get('/unit/ppks', [PpksController::class, 'ppks'])->name('unit.ppks');
+Route::get('/unit/ppks/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
+
+
+Route::post('/aspirasi/balas/{id}', [JawabanController::class, 'balas'])->name('aspirasi.balas');
 
 
 

@@ -55,7 +55,7 @@
                     <h6>
                         <i class="bi bi-building"></i> {{ $aspirasi['unit_nama'] }}
 
-                        @if ($aspirasi['status'] == 'terkonfirmasi')
+                        @if ($aspirasi['status'] == 'dibalas')
                         <span class="badge bg-success ms-2">
                         <i class="bi bi-check-circle-fill"></i> Terkonfirmasi
                         </span>

@@ -49,12 +49,12 @@
     <div class="card mb-3 shadow-sm border-0">
       <div class="card-body">
         <label class="form-label fw-semibold text-muted">Isi Laporan</label>
-        <textarea class="form-control mb-3" rows="4" readonly>{{ $lihatppks['isi'] }}</textarea>
+        <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
 
-        <form action="{{ url('/aspirasi/ppks/balas') }}" method="POST">
+        <form action="{{ route('aspirasi.balas', $aspirasi['id']) }}" method="POST">
           @csrf
           <label class="form-label fw-semibold text-muted">Balas Laporan</label>
-          <textarea name="balasan" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
+          <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
 
           <div class="mt-3 text-end">
             <button type="submit" class="btn btn-outline-primary">
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <a href="/aspirasi/ppks" class="btn btn-outline-primary">
+    <a href="{{route('unit.ppks')}}" class="btn btn-outline-primary">
       <i class="bi bi-arrow-left-circle me-1"></i> Kembali
     </a>
   </div>
