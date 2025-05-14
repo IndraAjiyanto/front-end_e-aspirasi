@@ -40,9 +40,9 @@ Route::get('/navbar', [NavbarController::class, 'navbar'])->name('navbar.form');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 
 
-Route::get('/aspirasi/akademik', [AkademikController::class, 'akademik'])->name('aspirasi.akademik');
-Route::get('/aspirasi/lihat/{id}', [AkademikController::class, 'lihat'])->name('aspirasi.akademik.lihat');
-Route::post('/aspirasi/balas/{id}', [AkademikController::class, 'balas'])->name('aspirasi.akademik.balas');
+Route::get('/unit/akademik', [AkademikController::class, 'akademik'])->name('unit.akademik');
+Route::get('/unit/lihat/{id}', [AkademikController::class, 'lihat'])->name('unit.akademik.lihat');
+Route::post('/aspirasi/balas/{id}', [AkademikController::class, 'balas'])->name('aspirasi.balas');
 
 
 

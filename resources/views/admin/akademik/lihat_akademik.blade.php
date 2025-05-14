@@ -51,7 +51,7 @@
         <label class="form-label fw-semibold text-muted">Isi Laporan</label>
         <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
 
-        <form action="{{ route('aspirasi.akademik.balas', $aspirasi['id']) }}" method="POST">
+        <form action="{{ route('aspirasi.balas', $aspirasi['id']) }}" method="POST">
           @csrf
           <label class="form-label fw-semibold text-muted">Balas Laporan</label>
           <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <a href="{{route('aspirasi.akademik')}}" class="btn btn-outline-primary">
+    <a href="{{route('unit.akademik')}}" class="btn btn-outline-primary">
       <i class="bi bi-arrow-left-circle me-1"></i> Kembali
     </a>
   </div>

@@ -72,7 +72,7 @@
         
           <!-- Status Container untuk memastikan ceklis ada di kanan -->
           <div class="status-container">
-            <a href="{{route('aspirasi.akademik.lihat', $item['id'])}}" class="btn btn-outline-primary">
+            <a href="{{route('unit.akademik.lihat', $item['id'])}}" class="btn btn-outline-primary">
               <i class="bi bi-eye-fill me-1"></i> Lihat
             </a>
 
