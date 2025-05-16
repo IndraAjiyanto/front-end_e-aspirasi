@@ -20,7 +20,7 @@
     }
 
     .text-primary {
-      color: #0d6efd !important; /* warna biru untuk akademik */
+      color: #0d6efd !important;
     }
 
     .btn-outline-primary {
@@ -32,44 +32,92 @@
       background-color: #0d6efd;
       color: white;
     }
+
+    .jawaban-card {
+      background-color: #ffffff;
+      border-left: 5px solid #0d6efd;
+    }
+
+    .avatar-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #0d6efd;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container py-5">
-    <div class="row mb-4">
-      <div class="col text-center">
-        <h2 class="fw-bold text-primary">
-          <i class="bi bi-book-fill me-2"></i> Laporan Akademik
-        </h2>
-        <p class="text-muted">Berikut laporan akademik yang masuk untuk ditindaklanjuti oleh tim akademik.</p>
-      </div>
+<div class="container py-5">
+  <div class="row mb-4">
+    <div class="col text-center">
+      <h2 class="fw-bold text-primary">
+        <i class="bi bi-book-fill me-2"></i> Laporan Akademik
+      </h2>
+      <p class="text-muted">Berikut laporan akademik yang masuk untuk ditindaklanjuti oleh tim akademik.</p>
     </div>
-
-    <div class="card mb-3 shadow-sm border-0">
-      <div class="card-body">
-        <label class="form-label fw-semibold text-muted">Isi Laporan</label>
-        <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
-
-        <form action="{{ route('aspirasi.balas', $aspirasi['id']) }}" method="POST">
-          @csrf
-          <label class="form-label fw-semibold text-muted">Balas Laporan</label>
-          <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
-
-          <div class="mt-3 text-end">
-            <button type="submit" class="btn btn-outline-primary">
-              <i class="bi bi-send-fill me-1"></i> Kirim Balasan
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <a href="{{route('unit.akademik')}}" class="btn btn-outline-primary">
-      <i class="bi bi-arrow-left-circle me-1"></i> Kembali
-    </a>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Laporan -->
+  <div class="card mb-3 shadow-sm border-0">
+    <div class="card-body">
+      <label class="form-label fw-semibold text-muted">Isi Laporan</label>
+      <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
+
+      <!-- Form Balas -->
+      <form action="{{ route('aspirasi.balas', $aspirasi['id']) }}" method="POST">
+        @csrf
+        <label class="form-label fw-semibold text-muted">Balas Laporan</label>
+        <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
+
+        <div class="mt-3 text-end">
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="bi bi-send-fill me-1"></i> Kirim Balasan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Daftar Balasan -->
+  @if(count($jawaban) > 0)
+    <div class="mb-4">
+      <h5 class="text-primary fw-bold mb-3">
+        <i class="bi bi-chat-dots-fill me-2"></i> Daftar Balasan
+      </h5>
+
+      @foreach ($jawaban as $item)
+        <div class="card jawaban-card mb-3 shadow-sm border-0">
+          <div class="card-body d-flex">
+            <div class="me-3">
+              <div class="avatar-icon">
+                <i class="bi bi-person-fill"></i>
+              </div>
+            </div>
+            <div>
+              <p class="mb-1 text-dark">{{ $item['isi'] }}</p>
+              <small class="text-muted">
+                <i class="bi bi-clock me-1"></i>
+                {{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('d M Y H:i') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  @endif
+
+  <!-- Tombol Kembali -->
+  <a href="{{ route('unit.akademik') }}" class="btn btn-outline-primary">
+    <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+  </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
