@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Http;
 
 class JawabanController extends Controller
 {
-        public function balas(Request $request, $id){
+    public function index(){
+        
+    }
+
+    public function create(Request $request, $id){
         $validate = $request->validate([
             'isi' => 'required'
         ]);

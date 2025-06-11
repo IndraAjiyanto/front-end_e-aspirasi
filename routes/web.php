@@ -48,7 +48,7 @@ Route::get('/unit/ppks', [PpksController::class, 'ppks'])->name('unit.ppks');
 Route::get('/unit/ppks/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
 
 
-Route::post('/aspirasi/balas/{id}', [JawabanController::class, 'balas'])->name('aspirasi.balas');
+Route::resource('jawaban', JawabanController::class);
 
 
 
