@@ -48,9 +48,6 @@ Route::get('/unit/ppks', [PpksController::class, 'ppks'])->name('unit.ppks');
 Route::get('/unit/ppks/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
 
 
-Route::resource('jawaban', JawabanController::class);
-
-
 
 
 // ROUTE ADMIN
@@ -71,3 +68,5 @@ Route::get('/aspirasi/lihatsarpras', [SaranaPrasaranaController::class, 'lihatsa
 
 // Aspirasi
 Route::resource('aspirasi', AspirasiController::class);
+
+Route::resource('jawaban', JawabanController::class);

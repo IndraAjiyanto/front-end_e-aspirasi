@@ -54,6 +54,22 @@ class AspirasiController extends Controller
         }  
     }
 
+    public function show($id){
+                $response = Http::get("http://localhost:8080/aspirasi/{$id}");
+
+                // Cek kalau berhasil
+                if ($response->successful()) {
+                    $data = $response->json(); // ambil data JSON dari API
+                } else {
+                    $data = []; // fallback kalau gagal
+                }
+    return view('mahasiswa.detail_aspirasi', [
+        'aspirasi'=> $data['aspirasi'], 
+        'jawaban'=> $data['jawaban'],
+        'unit'=> $data['unit']
+        ] );
+    }
+
     public function edit($id){
         $response_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}/edit");
         $response_unit = Http::get('http://localhost:8080/unit');

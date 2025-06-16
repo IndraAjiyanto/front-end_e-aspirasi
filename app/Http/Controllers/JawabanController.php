@@ -11,13 +11,13 @@ class JawabanController extends Controller
         
     }
 
-    public function create(Request $request, $id){
+    public function store(Request $request){
         $validate = $request->validate([
-            'isi' => 'required'
+            'isi' => 'required',
+            'aspirasi_id' => 'required'
         ]);
 
         $validate['status']  = 'dibalas';
-        $validate['aspirasi_id']  = $id;
 
         Http::post("http://localhost:8080/jawaban", $validate);
         return redirect()->back();

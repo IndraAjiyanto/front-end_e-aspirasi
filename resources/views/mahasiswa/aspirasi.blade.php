@@ -67,32 +67,9 @@
                     </h6>
 
                     <p>{{ Str::limit($aspirasi['isi'], 20) }}...</p>
-                    <a href="#detail-{{ $aspirasi['id'] }}" class="btn btn-sm btn-outline-info" data-bs-toggle="collapse">
-                        <i class="bi bi-eye"></i> Lihat Detail
-                    </a>
-                    <div id="detail-{{ $aspirasi['id'] }}" class="collapse mt-2">
-                    <p>{{ $aspirasi['isi'] }}</p>
-
-            <div class="mt-3 d-flex gap-2">
-            <a href="{{route('aspirasi.edit', $aspirasi['id'] )}}" class="btn btn-warning btn-sm">
-            <i class="bi bi-pencil-square"></i> Edit </a>
-
-            <form action="{{route('aspirasi.destroy', $aspirasi['id'])}}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus aspirasi ini?')">
-                <i class="bi bi-trash"></i> Hapus
-            </button>
-        </form>
-    </div>
-
-        <!-- Tombol kembali/menutup detail -->
-        <div class="d-flex justify-content-end mt-2">
-        <button class="btn btn-light btn-sm" data-bs-toggle="collapse" data-bs-target="#detail-{{ $aspirasi['id'] }}">
-            <i class="bi bi-arrow-bar-up"></i> Tutup Detail
-        </button>
-            </div>
-            </div>
+   <a href="{{ route('aspirasi.show', $aspirasi['id']) }}" class="btn btn-sm btn-outline-info">
+    <i class="bi bi-eye"></i> Lihat Detail
+</a>
             </div>
             </div>
             @endforeach
