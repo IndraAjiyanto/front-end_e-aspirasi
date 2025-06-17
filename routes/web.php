@@ -36,12 +36,14 @@ Route::get('/', function () {
 // ROUTE MAHASISWA
 // login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login/proses', [AuthController::class, 'proses'])->name('login.proses');
 
 // Navbar
 Route::get('/navbar', [NavbarController::class, 'navbar'])->name('navbar.form');
 
 // Menampilkan form register
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/daftar', [AuthController::class, 'daftar'])->name('daftar');
 
 
 Route::get('/unit/akademik', [AkademikController::class, 'akademik'])->name('unit.akademik');

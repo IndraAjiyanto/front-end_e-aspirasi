@@ -74,29 +74,78 @@
         <h3 class="register-title mt-2">Pendaftaran Akun</h3>
     </div>
 
-    <form method="POST" action="/daftar">
-        @csrf
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+ <form method="POST" action="{{ route('daftar') }}">
+    @csrf
 
-        <div class="mb-3 input-group">
+    <!-- Username -->
+    <div class="mb-3 input-group">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
         <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-        </div>
+    </div>
 
-        <div class="mb-3 input-group">
+    <!-- Email -->
+    <div class="mb-3 input-group">
         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
         <input type="email" name="email" class="form-control" placeholder="Email" required>
-        </div>
+    </div>
 
-        <div class="mb-4 input-group">
+    <!-- Password -->
+    <div class="mb-3 input-group">
         <span class="input-group-text"><i class="bi bi-lock"></i></span>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
-        </div>
+    </div>
 
+    <!-- Konfirmasi Password -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+        <input type="password" name="pass_confirm" class="form-control" placeholder="Konfirmasi Password" required>
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100">
-            <i class="bi bi-check-circle me-1"></i> Daftar
-        </button>
-    </form>
+    <!-- NIM -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+        <input type="text" name="nim" class="form-control" placeholder="NIM" required>
+    </div>
+
+    <!-- Nama -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+        <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap" required>
+    </div>
+
+    <!-- Kelas -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-building"></i></span>
+        <input type="text" name="kelas" class="form-control" placeholder="Kelas" required>
+    </div>
+
+    <!-- Prodi -->
+    <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-journal-code"></i></span>
+        <input type="text" name="prodi" class="form-control" placeholder="Program Studi" required>
+    </div>
+
+    <!-- Jurusan -->
+    <div class="mb-4 input-group">
+        <span class="input-group-text"><i class="bi bi-journals"></i></span>
+        <input type="text" name="jurusan" class="form-control" placeholder="Jurusan" required>
+    </div>
+
+    <!-- Tombol Submit -->
+    <button type="submit" class="btn btn-primary w-100">
+        <i class="bi bi-check-circle me-1"></i> Daftar
+    </button>
+</form>
+
 
     <p class="text-center mt-3">
         Sudah punya akun? <a href="/login" class="text-decoration-none text-primary">Login di sini</a>
