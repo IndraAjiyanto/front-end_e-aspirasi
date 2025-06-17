@@ -67,17 +67,17 @@
                     </h6>
 
                     <p>{{ Str::limit($aspirasi['isi'], 20) }}...</p>
-   <a href="{{ route('aspirasi.show', $aspirasi['id']) }}" class="btn btn-sm btn-outline-info">
-    <i class="bi bi-eye"></i> Lihat Detail
-</a>
+                    <a href="{{ route('aspirasi.show', $aspirasi['id']) }}" class="btn btn-sm btn-outline-info">
+                        <i class="bi bi-eye"></i> Lihat Detail
+                    </a>
+                </div>
+                </div>
+                @endforeach
             </div>
-            </div>
-            @endforeach
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
             document.getElementById('submitAspirasi').addEventListener('click', function () {
             const unit = document.getElementById('unit').value;
             const isi = document.getElementById('isi').value;

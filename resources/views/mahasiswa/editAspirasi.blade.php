@@ -3,50 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Tambah Aspirasi</title>
+    <title>Edit Aspirasi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body>
-<!-- <div class="modal fade" id="tambahAspirasiModal" tabindex="-1" aria-labelledby="tambahAspirasiModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahAspirasiModalLabel">Tambah Aspirasi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body"> -->
-                        <form id="aspirasiForm" action="{{route('aspirasi.update', $aspirasi['id'])}}" method="post">
-                            @method('PUT')
-                            @csrf
-                            <div class="mb-3">
-                                <label for="unit" class="form-label">Pilih Unit</label>
-                                <select id="unit" name="unit_id" class="form-select" required>
-                                    <option value="">-- Pilih Unit --</option>
-                                    @foreach($unit as $row)
-                                    <option value="{{$row['id']}}" {{ $row['id'] == $aspirasi['unit_id'] ? 'selected' : '' }}>{{$row['nama']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="isi" class="form-label">Isi Aspirasi</label>
-                                <textarea id="isi" name="isi"  rows="4" class="form-control"  required>{{$aspirasi['isi']}}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="isi" class="form-label">NIM mahasiswa</label>
-                                <input type="text" id="mahasiswa_nim" value="{{$aspirasi['mahasiswa_nim']}}" name="mahasiswa_nim" rows="4" class="form-control" required>
-                            </div>
+<body class="bg-light">
 
-                            <button class="btn btn-primary" id="submitAspirasi" type="submit"><i class="bi bi-send-plus">Simpan</i></button>
-                        </form>
-                        <!-- <div class="alert alert-warning d-none" id="tambahAlert">Harap isi semua field!</div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary" id="submitAspirasi"><i class="bi bi-send-plus"></i> Simpan</button>
-                    </div>
-                </div>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Aspirasi</h5>
             </div>
-        </div> -->
+            <div class="card-body">
+
+                <form id="aspirasiForm" action="{{ route('aspirasi.update', $aspirasi['id']) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="mb-3">
+                        <label for="unit" class="form-label">Pilih Unit</label>
+                        <select id="unit" name="unit_id" class="form-select" required>
+                            <option value="">-- Pilih Unit --</option>
+                            @foreach($unit as $row)
+                                <option value="{{ $row['id'] }}" {{ $row['id'] == $aspirasi['unit_id'] ? 'selected' : '' }}>
+                                    {{ $row['nama'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="isi" class="form-label">Isi Aspirasi</label>
+                        <textarea id="isi" name="isi" rows="4" class="form-control" required>{{ $aspirasi['isi'] }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mahasiswa_nim" class="form-label">NIM Mahasiswa</label>
+                        <input type="text" id="mahasiswa_nim" name="mahasiswa_nim" value="{{ $aspirasi['mahasiswa_nim'] }}" class="form-control" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ route('aspirasi.index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Kembali
+                    </a>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="reset" class="btn btn-warning text-white">
+                            <i class="bi bi-x-circle-fill"></i> Batal
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send-check-fill"></i> Simpan Perubahan
+                        </button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

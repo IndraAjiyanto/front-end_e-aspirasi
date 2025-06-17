@@ -26,6 +26,7 @@ class AkademikController extends Controller
         return view('admin.akademik.lihat_akademik', [
             'aspirasi' => $aspirasi['aspirasi'],
             'jawaban' => $jawaban,
+            'editId' => request()->query('edit') // ?edit=ID
         ]);
     }
 }

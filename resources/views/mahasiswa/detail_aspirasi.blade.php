@@ -54,6 +54,7 @@
                 <i class="bi bi-pencil-square"></i> Edit
             </a>
             <form action="{{ route('aspirasi.destroy', $aspirasi['id']) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus aspirasi ini?')">
+
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger btn-sm" type="submit">

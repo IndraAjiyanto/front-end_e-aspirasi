@@ -3,75 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class SaranaPrasaranaController extends Controller
 {
     // Menampilkan daftar aspirasi sarana prasarana
     public function Sarpras()
     {
-        $sarpras = [
-            (object)[
-                'id' => 1,
-                'isi' => 'Kursi di ruang kelas A-101 banyak yang rusak dan tidak nyaman digunakan.',
-                'status' => 'diproses',
-            ],
-            (object)[
-                'id' => 2,
-                'isi' => 'AC di laboratorium komputer lantai 2 mati dan sangat panas.',
-                'status' => 'terbalas',
-            ],
-            (object)[
-                'id' => 3,
-                'isi' => 'Lampu di area parkiran mati sejak minggu lalu.',
-                'status' => 'terbalas',
-            ],
-        ];
+         $respon = Http::get('http://localhost:8080/unit/aspirasi/3'); // ID unit 3 untuk Sarpras
+    $sarpras = $respon->json();
 
-        return view('admin.sarana_prasarana', [
-            'sarpras' => $sarpras,
+    return view('admin.sarpras.sarana_prasarana', [
+        'sarpras' => $sarpras,
+    ]);
+    }
+
+    public function lihat($id)
+    {
+        
+        $respon_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}");
+        $respon_jawaban = Http::get("http://localhost:8080/jawaban/aspirasi/{$id}");
+
+        
+        $aspirasi = $respon_aspirasi->json();
+        $jawaban = $respon_jawaban->json();
+        return view('admin.sarpras.lihat_sarpras', [
+            'aspirasi' => $aspirasi['aspirasi'],
+            'jawaban' => $jawaban,
+            'editId' => request()->query('edit') // ?edit=ID
         ]);
-    }
-
-    // Menampilkan detail aspirasi berdasarkan ID
-    public function show($id)
-    {
-        $sarpras = [
-            (object)[
-                'id' => 1,
-                'isi' => 'Kursi di ruang kelas A-101 banyak yang rusak dan tidak nyaman digunakan.',
-                'status' => 'diproses',
-            ],
-            (object)[
-                'id' => 2,
-                'isi' => 'AC di laboratorium komputer lantai 2 mati dan sangat panas.',
-                'status' => 'terbalas',
-            ],
-            (object)[
-                'id' => 3,
-                'isi' => 'Lampu di area parkiran mati sejak minggu lalu.',
-                'status' => 'terbalas',
-            ],
-        ];
-
-        // Cari aspirasi berdasarkan ID
-        $aspirasi = collect($sarpras)->firstWhere('id', $id);
-
-        if (!$aspirasi) {
-            return abort(404, 'Aspirasi tidak ditemukan.');
-        }
-
-        return view('admin.lihat_sarpras', compact('aspirasi'));
-    }
-
-    public function lihatSarpras()
-    {
-        $lihatSarpras = [
-            'id' => 1, 
-            'isi' => 'Tempat parkir kendaraan terlalu sempit dan tidak teratur.',
-        ];
-    
-        return view('admin.lihat_sarpras', compact('lihatSarpras'));
-    }
+}
 }
 
 

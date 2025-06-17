@@ -26,6 +26,7 @@ class PpksController extends Controller
         return view('admin.ppks.lihat_ppks', [
             'aspirasi' => $aspirasi['aspirasi'],
             'jawaban' => $jawaban,
+            'editId' => request()->query('edit') // ?edit=ID
         ]);
     }
 }
