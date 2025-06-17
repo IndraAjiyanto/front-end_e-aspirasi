@@ -20,16 +20,16 @@
     }
 
     .text-primary {
-      color: #198754 !important; /* Warna hijau khas sarpras */
+      color: #2575fc !important; /* Warna hijau khas sarpras */
     }
 
     .btn-outline-primary {
-      border-color: #198754;
-      color: #198754;
+      border-color: #2575fc;
+      color: #2575fc;
     }
 
     .btn-outline-primary:hover {
-      background-color: #198754;
+      background-color: #2575fc;
       color: white;
     }
 
@@ -76,17 +76,17 @@
     @forelse($sarpras as $item)
       <div class="card mb-3 shadow-sm border-0">
         <div class="card-body">
-          <p class="card-text text-secondary">{{ \Illuminate\Support\Str::limit($item->isi, 100) }}</p>
+          <p class="card-text text-secondary">{{ Str::limit($item['isi'], 100) }}</p>
           <div class="status-container">
-            <a href="/aspirasi/lihatsarpras" class="btn btn-outline-primary">
+            <a href="{{route('unit.sarpras.lihat', $item['id'])}}" class="btn btn-outline-primary">
               <i class="bi bi-eye-fill me-1"></i> Lihat
             </a>
 
             <!-- Tanda ceklis jika aspirasi sudah terbalas -->
-            @if($item->status == 'terbalas')
+            @if($item['status'] == 'dibalas')
               <i class="bi bi-check-circle status-answered" title="Sudah Terbalas"></i>
             <!-- Tanda jika aspirasi sedang diproses -->
-            @elseif($item->status == 'diproses')
+            @elseif($item['status'] == 'diproses')
               <i class="bi bi-hourglass-split text-warning status-in-progress" title="Sedang Diproses"></i>
             @endif
           </div>

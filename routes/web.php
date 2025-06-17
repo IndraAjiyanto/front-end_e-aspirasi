@@ -47,8 +47,12 @@ Route::get('/unit/akademik/{id}', [AkademikController::class, 'lihat'])->name('u
 Route::get('/unit/ppks', [PpksController::class, 'ppks'])->name('unit.ppks');
 Route::get('/unit/ppks/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
 
+Route::get('/unit/sarpras', [SaranaPrasaranaController::class, 'sarpras'])->name('unit.sarpras');
+Route::get('/unit/sarpras/{id}', [SaranaPrasaranaController::class, 'lihat'])->name('unit.sarpras.lihat');
 
 
+// Route::get('/unit/sarpras', [SaranaPrasaranaController::class, 'sarpras'])->name('unit.sarpras');
+// Route::get('/unit/sarpras/{id}', [SaranaPrasaranaController::class, 'lihat'])->name('unit.sarpras.lihat');
 
 // ROUTE ADMIN
 Route::get('/dashboard', [AdminDasboardController::class, 'index'])->name('dashboard');
@@ -61,12 +65,20 @@ Route::get('/aspirasi/ppks', [PpksController::class, 'ppks']);
 //lihat aspirasi ppks
 Route::get('/aspirasi/lihatppks', [PpksController::class, 'lihatppks']);
 
+
 //aspirasi sarana prasarana
-Route::get('/aspirasi/sarpras', [SaranaPrasaranaController::class, 'Sarpras']);
+Route::get('/aspirasi/sarpras', [SaranaPrasaranaController::class, 'sarpras']);
 //lihat sarpras
 Route::get('/aspirasi/lihatsarpras', [SaranaPrasaranaController::class, 'lihatsarpras']);
+
 
 // Aspirasi
 Route::resource('aspirasi', AspirasiController::class);
 
 Route::resource('jawaban', JawabanController::class);
+
+//ubah dan hapus yang daftar balasan
+Route::put('/jawaban/{id}', [JawabanController::class, 'update'])->name('jawaban.update');
+Route::delete('/jawaban/{id}', [JawabanController::class, 'destroy'])->name('jawaban.destroy');
+
+

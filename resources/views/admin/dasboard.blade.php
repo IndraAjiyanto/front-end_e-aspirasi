@@ -165,9 +165,9 @@
             <div id="aspirasi-alert" class="alert alert-info shadow">
               <strong><i class="bi bi-info-circle-fill"></i> Unit:</strong>
               <ul class="mb-0 mt-2 ps-3">
-              <li><a href="/aspirasi/ppks" class="alert-link">PPKS</a></li>
-              <li><a href="/aspirasi/akademik" class="alert-link">Akademik</a></li>
-                <li><a href="/aspirasi/sarpras" class="alert-link">Sarana dan Prasarana</a></li>
+              <li><a href="{{route('unit.ppks')}}" class="alert-link">PPKS</a></li>
+              <li><a href="{{route('unit.akademik')}}" class="alert-link">Akademik</a></li>
+                <li><a href="{{route('unit.sarpras')}}" class="alert-link">Sarana dan Prasarana</a></li>
               </ul>
             </div>
           </li>

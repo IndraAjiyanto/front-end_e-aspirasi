@@ -20,28 +20,28 @@
     }
 
     .text-primary {
-      color: #0d6efd !important;
+      color: #2575fc !important;
     }
 
     .btn-outline-primary {
-      border-color: #0d6efd;
-      color: #0d6efd;
+      border-color: #2575fc;
+      color: #2575fc;
     }
 
     .btn-outline-primary:hover {
-      background-color: #0d6efd;
+      background-color: #2575fc;
       color: white;
     }
 
     .jawaban-card {
       background-color: #ffffff;
-      border-left: 5px solid #0d6efd;
+      border-left: 5px solid #2575fc;
     }
 
     .avatar-icon {
       width: 40px;
       height: 40px;
-      background-color: #0d6efd;
+      background-color: #2575fc;
       color: white;
       border-radius: 50%;
       display: flex;
@@ -57,7 +57,7 @@
   <div class="row mb-4">
     <div class="col text-center">
       <h2 class="fw-bold text-primary">
-        <i class="bi bi-book-fill me-2"></i> Laporan Akademik
+        <i class="bi bi-journal-bookmark-fill fs-3 me-2 text-primary"></i> Laporan Akademik
       </h2>
       <p class="text-muted">Berikut laporan akademik yang masuk untuk ditindaklanjuti oleh tim akademik.</p>
     </div>
@@ -70,8 +70,9 @@
       <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
 
       <!-- Form Balas -->
-      <form action="{{ route('aspirasi.store', $aspirasi['id']) }}" method="POST">
+      <form action="{{ route('jawaban.store') }}" method="POST">
         @csrf
+        <input type="text" name="aspirasi_id" value="{{$aspirasi['id']}}">
         <label class="form-label fw-semibold text-muted">Balas Laporan</label>
         <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
 
@@ -100,19 +101,29 @@
             </div>
           </div>
           <div class="flex-grow-1">
-            <p class="mb-1 text-dark">{{ $item['isi'] }}</p>
-            <small class="text-muted">
-              <i class="bi bi-clock me-1"></i>
-              {{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('d M Y H:i') }}
-            </small>
+            @if (isset($editId) && $editId == $item['id'])
+              <form action="{{ route('jawaban.update', $item['id']) }}" method="POST" class="mb-2">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="aspirasi_id" value="{{ $aspirasi['id'] }}">
+                <textarea name="isi" class="form-control mb-2" rows="3" required>{{ $item['isi'] }}</textarea>
+                <div class="text-end">
+                  <button type="submit" class="btn btn-sm btn-success">Simpan</button>
+                  <a href="{{ url()->current() }}" class="btn btn-sm btn-secondary">Batal</a>
+                </div>
+              </form>
+            @else
+              <p class="mb-1 text-dark">{{ $item['isi'] }}</p>
+              <small class="text-muted">
+                <i class="bi bi-clock me-1"></i>
+                {{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('d M Y H:i') }}
+              </small>
+            @endif
           </div>
           <div class="ms-3 text-end">
-            {{-- Tombol Ubah --}}
-            <a href="{{ route('jawaban.edit', $item['id']) }}" class="btn btn-sm btn-outline-primary me-1">
+            <a href="{{ url()->current() }}?edit={{ $item['id'] }}" class="btn btn-sm btn-outline-primary me-1">
               <i class="bi bi-pencil"></i> Ubah
             </a>
-
-            {{-- Tombol Hapus --}}
             <form action="{{ route('jawaban.destroy', $item['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jawaban ini?')">
               @csrf
               @method('DELETE')
