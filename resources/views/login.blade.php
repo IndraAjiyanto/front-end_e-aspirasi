@@ -66,7 +66,7 @@
       <h3 class="login-title mt-2">Login Mahasiswa</h3>
     </div>
 
-    <form action="/login" method="POST">
+    <form action="{{ route('login.proses') }}" method="POST">
       @csrf
 
     <div class="mb-3 input-group">
