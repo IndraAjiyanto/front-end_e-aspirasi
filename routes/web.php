@@ -14,6 +14,9 @@ use App\Http\Controllers\LihatAkademikController;
 use App\Http\Controllers\SaranaPrasaranaController;
 use App\Http\Controllers\LihatSaranaPrasaranaController;
 
+use App\Http\Controllers\DashboardAkademikController;
+use App\Http\Controllers\DashboardPpksController;
+use App\Http\Controllers\DashboardSarprasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,6 +59,11 @@ Route::get('/unit/sarpras/{id}', [SaranaPrasaranaController::class, 'lihat'])->n
 
 // ROUTE ADMIN
 Route::get('/dashboard', [AdminDasboardController::class, 'index'])->name('dashboard');
+
+//Route admin per unit
+Route::get('/dashboardakademik', [DashboardAkademikController::class, 'index'])->name('dashboardakademik');
+Route::get('/dashboardppks', [DashboardPpksController::class, 'index'])->name('dashboardppks');
+Route::get('/dashboardsarpras', [DashboardSarprasController::class, 'index'])->name('dashboardsarpras');
 
 //aspirasi akademik
 

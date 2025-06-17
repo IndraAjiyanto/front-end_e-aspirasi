@@ -1,9 +1,8 @@
-@extends('layout.landing')
+@extends('layout.landing_ppks')
 
 @section('title', 'Beranda Aspirasi')
 
 @section('content')
-
 
   <!-- Penjelasan tentang Aspirasi -->
   <div class="aspirasi-section">

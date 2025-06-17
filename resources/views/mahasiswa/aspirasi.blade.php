@@ -1,31 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Daftar Aspirasi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            min-height: 100vh;
-            padding-top: 60px;
-        }
-        .card {
-            border-radius: 1rem;
-            border: 1px solid #dee2e6;
-        }
-        .btn-custom {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-        }
-        .btn-custom:hover {
-            background-color: #0b5ed7;
-        }
-    </style>
-</head>
-<body>
+@extends('layout.app')
+
+@section('title', 'Daftar Aspirasi')
+
+@section('content')
     <div class="container">
         <div class="text-center mb-5">
             <h1 class="fw-bold"><i class="bi bi-card-checklist"></i> Daftar Aspirasi</h1>
@@ -44,8 +21,6 @@
         </div>
 
         <!-- Modal Tambah Aspirasi -->
-
-
         <!-- Daftar Aspirasi -->
         <div class="row mt-3">
             @foreach($aspirasis as $aspirasi)
@@ -118,5 +93,4 @@
             }
         });
     </script>
-</body>
-</html>
+@endsection

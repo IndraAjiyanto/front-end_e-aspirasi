@@ -1,58 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Laporan Akademik</title>
+@extends('layout.app')
 
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+@section('title', 'Laporan Akademik')
 
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f2f5;
-    }
-
-    .card {
-      border-radius: 10px;
-    }
-
-    .text-primary {
-      color: #2575fc !important;
-    }
-
-    .btn-outline-primary {
-      border-color: #2575fc;
-      color: #2575fc;
-    }
-
-    .btn-outline-primary:hover {
-      background-color: #2575fc;
-      color: white;
-    }
-
-    .jawaban-card {
-      background-color: #ffffff;
-      border-left: 5px solid #2575fc;
-    }
-
-    .avatar-icon {
-      width: 40px;
-      height: 40px;
-      background-color: #2575fc;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-  </style>
-</head>
-<body>
-
+@section('content')
 <div class="container py-5">
   <div class="row mb-4">
     <div class="col text-center">
@@ -62,7 +12,7 @@
       <p class="text-muted">Berikut laporan akademik yang masuk untuk ditindaklanjuti oleh tim akademik.</p>
     </div>
   </div>
-
+ 
   <!-- Laporan -->
   <div class="card mb-3 shadow-sm border-0">
     <div class="card-body">
@@ -145,6 +95,4 @@
   </a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection
