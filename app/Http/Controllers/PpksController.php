@@ -14,7 +14,8 @@ class PpksController extends Controller
 
         // Ganti URL sesuai backend kamu
         $respon = Http::withToken($token)->get("http://localhost:8080/ppks/aspirasi/all/{$user['id']}");
-        $ppks = $respon->json();
+        $data = $respon->json();
+        $ppks = $data['aspirasi'];
 
         return view('admin.ppks.ppks', [
             'ppks' => $ppks,

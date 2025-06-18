@@ -14,7 +14,8 @@ class SaranaPrasaranaController extends Controller
         $user = session('user');
 
         $respon = Http::withToken($token)->get("http://localhost:8080/sarpras/aspirasi/all/{$user['id']}");
-        $sarpras = $respon->json();
+        $data = $respon->json();
+        $sarpras = $data['aspirasi'];
 
         return view('admin.sarpras.sarana_prasarana', [
             'sarpras' => $sarpras,

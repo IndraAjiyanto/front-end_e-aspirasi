@@ -12,11 +12,12 @@ class AspirasiController extends Controller
 public function index()
 {
     $token = session("token");
+    $user = session("user");
     if (!$token) {
         return redirect()->route('login')->with('error', 'Token tidak ditemukan');
     }
 
-    $response = Http::withToken($token)->get('http://localhost:8080/mahasiswa/aspirasi');
+    $response = Http::withToken($token)->get("http://localhost:8080/mahasiswa/aspirasi/all/{$user['id']}");
 
     if ($response->status() === 401) {
         return redirect()->route('login')->with('error', 'Sesi telah habis, silakan login kembali.');

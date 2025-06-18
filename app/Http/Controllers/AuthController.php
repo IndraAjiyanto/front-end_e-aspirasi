@@ -23,8 +23,8 @@ public function proses(Request $request)
         'password' => 'required'
     ]);
 
-    $response = Http::post('http://10.10.10.164/login', $validate);
-    // $response = Http::post('http://localhost:8080/login', $validate);
+    // $response = Http::post('http://10.10.10.164/login', $validate);
+    $response = Http::post('http://localhost:8080/login', $validate);
 
     if ($response->successful()) {
     session([
@@ -48,7 +48,7 @@ public function proses(Request $request)
 
 
 
-         public function showRegisterForm()
+public function showRegisterForm()
      {
          return view('mahasiswa.daftar');
      }
