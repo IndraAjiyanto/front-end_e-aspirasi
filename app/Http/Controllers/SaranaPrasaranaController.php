@@ -10,30 +10,28 @@ class SaranaPrasaranaController extends Controller
     // Menampilkan daftar aspirasi sarana prasarana
     public function Sarpras()
     {
-         $respon = Http::get('http://localhost:8080/unit/aspirasi/3'); // ID unit 3 untuk Sarpras
-    $sarpras = $respon->json();
+        $token = session('token');
+        $user = session('user');
 
-    return view('admin.sarpras.sarana_prasarana', [
-        'sarpras' => $sarpras,
-    ]);
+        $respon = Http::withToken($token)->get("http://localhost:8080/sarpras/aspirasi/all/{$user['id']}");
+        $sarpras = $respon->json();
+
+        return view('admin.sarpras.sarana_prasarana', [
+            'sarpras' => $sarpras,
+        ]);
     }
 
     public function lihat($id)
     {
-        
-        $respon_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}");
-        $respon_jawaban = Http::get("http://localhost:8080/jawaban/aspirasi/{$id}");
+        $token = session('token');
 
-        
+        $respon_aspirasi = Http::withToken($token)->get("http://localhost:8080/sarpras/aspirasi/{$id}");
         $aspirasi = $respon_aspirasi->json();
-        $jawaban = $respon_jawaban->json();
+
         return view('admin.sarpras.lihat_sarpras', [
-            'aspirasi' => $aspirasi['aspirasi'],
-            'jawaban' => $jawaban,
+            'aspirasi' => $aspirasi['aspirasi'] ,
+            'jawaban' => $aspirasi['jawaban'] ,
             'editId' => request()->query('edit') // ?edit=ID
         ]);
+    }
 }
-}
-
-
-

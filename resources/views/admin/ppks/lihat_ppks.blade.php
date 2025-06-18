@@ -18,7 +18,7 @@
         <label class="form-label fw-semibold text-muted">Isi Laporan</label>
         <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
 
-        <form action="{{route('jawaban.store')}}" method="POST">
+        <form action="{{route('ppks.jawaban.store')}}" method="POST">
           @csrf
           <input type="text" name="aspirasi_id" value="{{$aspirasi['id']}}">
           <label class="form-label fw-semibold text-muted">Balas Laporan</label>
@@ -49,7 +49,7 @@
           </div>
           <div class="flex-grow-1">
             @if (isset($editId) && $editId == $item['id'])
-              <form action="{{ route('jawaban.update', $item['id']) }}" method="POST" class="mb-2">
+              <form action="{{ route('ppks.jawaban.update', $item['id']) }}" method="POST" class="mb-2">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="aspirasi_id" value="{{ $aspirasi['id'] }}">
@@ -71,7 +71,7 @@
             <a href="{{ url()->current() }}?edit={{ $item['id'] }}" class="btn btn-sm btn-outline-primary me-1">
               <i class="bi bi-pencil"></i> Ubah
             </a>
-            <form action="{{ route('jawaban.destroy', $item['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jawaban ini?')">
+            <form action="{{ route('ppks.jawaban.destroy', $item['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jawaban ini?')">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-sm btn-outline-danger">

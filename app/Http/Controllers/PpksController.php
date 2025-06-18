@@ -9,7 +9,11 @@ class PpksController extends Controller
 {
     public function ppks()
     {
-        $respon = Http::get('http://localhost:8080/unit/aspirasi/2');
+        $token = session("token");
+        $user = session("user");
+
+        // Ganti URL sesuai backend kamu
+        $respon = Http::withToken($token)->get("http://localhost:8080/ppks/aspirasi/all/{$user['id']}");
         $ppks = $respon->json();
 
         return view('admin.ppks.ppks', [
@@ -19,13 +23,15 @@ class PpksController extends Controller
 
     public function lihat($id)
     {
-        $respon_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}");
-        $respon_jawaban = Http::get("http://localhost:8080/jawaban/aspirasi/{$id}");
+        $token = session("token");
+
+        // Mendapatkan aspirasi sekaligus jawaban dari endpoint yang sama seperti akademik
+        $respon_aspirasi = Http::withToken($token)->get("http://localhost:8080/ppks/aspirasi/{$id}");
         $aspirasi = $respon_aspirasi->json();
-        $jawaban = $respon_jawaban->json();
+
         return view('admin.ppks.lihat_ppks', [
             'aspirasi' => $aspirasi['aspirasi'],
-            'jawaban' => $jawaban,
+            'jawaban' => $aspirasi['jawaban'],
             'editId' => request()->query('edit') // ?edit=ID
         ]);
     }

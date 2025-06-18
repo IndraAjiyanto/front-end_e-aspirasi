@@ -2,93 +2,84 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PpksController;
-use App\Http\Controllers\NavbarController;
-use App\Http\Controllers\JawabanController;
-use App\Http\Controllers\AkademikController;
-use App\Http\Controllers\AspirasiController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LihatPpksController;
-use App\Http\Controllers\AdminDasboardController;
-use App\Http\Controllers\LihatAkademikController;
-use App\Http\Controllers\SaranaPrasaranaController;
-use App\Http\Controllers\LihatSaranaPrasaranaController;
+use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\AspirasiController;
+use App\Http\Controllers\JawabanController;
 
+use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\PpksController;
+use App\Http\Controllers\SaranaPrasaranaController;
+
+use App\Http\Controllers\AdminDasboardController;
 use App\Http\Controllers\DashboardAkademikController;
 use App\Http\Controllers\DashboardPpksController;
 use App\Http\Controllers\DashboardSarprasController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+| Semua route Laravel frontend
+|--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Halaman utama
+Route::get('/', fn () => view('welcome'));
 
-
-// ROUTE MAHASISWA
-// login
+// ===============================
+// AUTHENTIKASI (Login & Register)
+// ===============================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login/proses', [AuthController::class, 'proses'])->name('login.proses');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Navbar
-Route::get('/navbar', [NavbarController::class, 'navbar'])->name('navbar.form');
-
-// Menampilkan form register
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/daftar', [AuthController::class, 'daftar'])->name('daftar');
 
+// Navbar (Mahasiswa saja)
+Route::get('/navbar', [NavbarController::class, 'navbar'])->middleware('auth.jwt:mahasiswa')->name('dashboardmahasiswa');
+Route::resource('aspirasi', AspirasiController::class)->middleware('auth.jwt:mahasiswa');
 
-Route::get('/unit/akademik', [AkademikController::class, 'akademik'])->name('unit.akademik');
-Route::get('/unit/akademik/{id}', [AkademikController::class, 'lihat'])->name('unit.akademik.lihat');
+// ===============================
+// UNIT AKADEMIK
+// ===============================
+Route::prefix('unit/akademik')->middleware('auth.jwt:akademik')->group(function () {
+    Route::get('/aspirasi', [AkademikController::class, 'akademik'])->name('unit.akademik');
+    Route::get('/{id}', [AkademikController::class, 'lihat'])->name('unit.akademik.lihat');
+    Route::get('/', [DashboardAkademikController::class, 'index'])->name('dashboardakademik');
+    Route::resource('jawaban', JawabanController::class)->names('akademik.jawaban');
+});
 
-Route::get('/unit/ppks', [PpksController::class, 'ppks'])->name('unit.ppks');
-Route::get('/unit/ppks/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
+// ===============================
+// UNIT PPKS
+// ===============================
+Route::prefix('unit/ppks')->middleware('auth.jwt:ppks')->group(function () {
+    Route::get('/aspirasi', [PpksController::class, 'ppks'])->name('unit.ppks');
+    Route::get('/{id}', [PpksController::class, 'lihat'])->name('unit.ppks.lihat');
+    Route::get('/', [DashboardPpksController::class, 'index'])->name('dashboardppks');
+    Route::resource('jawaban', JawabanController::class)->names('ppks.jawaban');
 
-Route::get('/unit/sarpras', [SaranaPrasaranaController::class, 'sarpras'])->name('unit.sarpras');
-Route::get('/unit/sarpras/{id}', [SaranaPrasaranaController::class, 'lihat'])->name('unit.sarpras.lihat');
+});
 
+// ===============================
+// UNIT SARANA PRASARANA
+// ===============================
+Route::prefix('unit/sarpras')->middleware('auth.jwt:sarpras')->group(function () {
+    Route::get('/aspirasi', [SaranaPrasaranaController::class, 'sarpras'])->name('unit.sarpras');
+    Route::get('/{id}', [SaranaPrasaranaController::class, 'lihat'])->name('unit.sarpras.lihat');
+    Route::get('/', [DashboardSarprasController::class, 'index'])->name('dashboardsarpras');
+    Route::resource('jawaban', JawabanController::class)->names('sarpras.jawaban');
 
-// Route::get('/unit/sarpras', [SaranaPrasaranaController::class, 'sarpras'])->name('unit.sarpras');
-// Route::get('/unit/sarpras/{id}', [SaranaPrasaranaController::class, 'lihat'])->name('unit.sarpras.lihat');
+});
 
-// ROUTE ADMIN
-Route::get('/dashboard', [AdminDasboardController::class, 'index'])->name('dashboard');
+// ===============================
+// ADMIN - DASHBOARD
+// ===============================
+// Route::prefix('dashboard')->group(function () {
+//     Route::get('/', [AdminDasboardController::class, 'index'])->name('dashboard');
+// });
 
-//Route admin per unit
-Route::get('/dashboardakademik', [DashboardAkademikController::class, 'index'])->name('dashboardakademik');
-Route::get('/dashboardppks', [DashboardPpksController::class, 'index'])->name('dashboardppks');
-Route::get('/dashboardsarpras', [DashboardSarprasController::class, 'index'])->name('dashboardsarpras');
-
-//aspirasi akademik
-
-
-//aspirasi ppks
-Route::get('/aspirasi/ppks', [PpksController::class, 'ppks']);
-//lihat aspirasi ppks
-Route::get('/aspirasi/lihatppks', [PpksController::class, 'lihatppks']);
-
-
-//aspirasi sarana prasarana
-Route::get('/aspirasi/sarpras', [SaranaPrasaranaController::class, 'sarpras']);
-//lihat sarpras
-Route::get('/aspirasi/lihatsarpras', [SaranaPrasaranaController::class, 'lihatsarpras']);
-
-
-// Aspirasi
-Route::resource('aspirasi', AspirasiController::class);
-
-Route::resource('jawaban', JawabanController::class);
-
-//ubah dan hapus yang daftar balasan
-Route::put('/jawaban/{id}', [JawabanController::class, 'update'])->name('jawaban.update');
-Route::delete('/jawaban/{id}', [JawabanController::class, 'destroy'])->name('jawaban.destroy');
-
-
+// ===============================
+// JAWABAN ASPIRASI
+// ===============================

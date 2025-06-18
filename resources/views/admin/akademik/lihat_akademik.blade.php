@@ -20,9 +20,9 @@
       <textarea class="form-control mb-3" rows="4" readonly>{{ $aspirasi['isi'] }}</textarea>
 
       <!-- Form Balas -->
-      <form action="{{ route('jawaban.store') }}" method="POST">
+      <form action="{{ route('akademik.jawaban.store') }}" method="POST">
         @csrf
-        <input type="text" name="aspirasi_id" value="{{$aspirasi['id']}}">
+        <input type="hidden" name="aspirasi_id" value="{{$aspirasi['id']}}">
         <label class="form-label fw-semibold text-muted">Balas Laporan</label>
         <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
 
@@ -52,7 +52,7 @@
           </div>
           <div class="flex-grow-1">
             @if (isset($editId) && $editId == $item['id'])
-              <form action="{{ route('jawaban.update', $item['id']) }}" method="POST" class="mb-2">
+              <form action="{{ route('akademik.jawaban.update', $item['id']) }}" method="POST" class="mb-2">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="aspirasi_id" value="{{ $aspirasi['id'] }}">
@@ -74,7 +74,7 @@
             <a href="{{ url()->current() }}?edit={{ $item['id'] }}" class="btn btn-sm btn-outline-primary me-1">
               <i class="bi bi-pencil"></i> Ubah
             </a>
-            <form action="{{ route('jawaban.destroy', $item['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jawaban ini?')">
+            <form action="{{ route('akademik.jawaban.destroy', $item['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jawaban ini?')">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-sm btn-outline-danger">

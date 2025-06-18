@@ -12,6 +12,8 @@ class JawabanController extends Controller
     }
 
     public function store(Request $request){
+    $token = session("token");
+
         $validate = $request->validate([
             'isi' => 'required',
             'aspirasi_id' => 'required'
@@ -19,27 +21,33 @@ class JawabanController extends Controller
 
         $validate['status']  = 'dibalas';
 
-        Http::post("http://localhost:8080/jawaban", $validate);
+        Http::withToken($token)->post("http://localhost:8080/unit/jawaban", $validate);
         return redirect()->back();
     }
 
     public function update(Request $request, $id)
 {
+    $token = session("token");
+
     $request->validate([
         'aspirasi_id' => 'required',
         'isi' => 'required'
     ]);
 
-    Http::put("http://localhost:8080/jawaban/{$id}", [
+    Http::withToken($token)->put("http://localhost:8080/unit/jawaban/{$id}", [
         'aspirasi_id' => $request->aspirasi_id,
         'isi' => $request->isi
     ]);
 
-    return redirect()->route('unit.ppks.lihat', ['id' => $request->aspirasi_id]);
+    url()->current();
+    return redirect()->back();
+    
 }
 public function destroy($id)
 {
-    Http::delete("http://localhost:8080/jawaban/{$id}");
+    $token = session("token");
+
+    Http::withToken($token)->delete("http://localhost:8080/unit/jawaban/{$id}");
 
     return back();
 }

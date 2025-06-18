@@ -22,9 +22,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-logout" href="/login">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
+<form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-logout" onclick="return confirm('Yakin ingin logout?')">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+</form>
+
           </li>
         </ul>
       </div>

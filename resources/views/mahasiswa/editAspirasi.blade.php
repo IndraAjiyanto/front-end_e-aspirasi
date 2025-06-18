@@ -37,10 +37,7 @@
                         <textarea id="isi" name="isi" rows="4" class="form-control" required>{{ $aspirasi['isi'] }}</textarea>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="mahasiswa_nim" class="form-label">NIM Mahasiswa</label>
-                        <input type="text" id="mahasiswa_nim" name="mahasiswa_nim" value="{{ $aspirasi['mahasiswa_nim'] }}" class="form-control" required>
-                    </div>
+
 
                     <div class="d-flex justify-content-between align-items-center">
                     <a href="{{ route('aspirasi.index') }}" class="btn btn-secondary">

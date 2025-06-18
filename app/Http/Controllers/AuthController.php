@@ -23,24 +23,28 @@ public function proses(Request $request)
         'password' => 'required'
     ]);
 
-    try {
-        $response = Http::post('http://localhost:8080/login', $validate);
+    $response = Http::post('http://localhost:8080/login', $validate);
 
-        if ($response->successful()) {
-            session([
-                'token' => $response->json('token'),
-                'user' => $response->json('user'),
-            ]);
-            return redirect()->route('dashboard')->with('success', 'Berhasil login!');
-        } elseif ($response->status() === 422) {
-            return redirect()->back()->withErrors($response->json('errors'))->withInput();
-        } else {
-            return redirect()->back()->with('error', 'Login gagal. Username atau password salah.')->withInput();
+    if ($response->successful()) {
+    session([
+        'token' => $response['token'],
+        'user' => $response['user']
+    ]);
+        $decoded = json_decode(base64_decode(explode('.', $response['token'])[1]), true);
+        if ($decoded['role'] == 'akademik') {
+            return redirect()->route('dashboardakademik');
+        } else if($decoded['role'] == 'ppks') {
+            return redirect()->route('dashboardppks');
+        }else if($decoded['role'] == 'sarpras'){
+            return redirect()->route('dashboardsarpras');
+        }else if($decoded['role'] == 'mahasiswa'){
+            return redirect()->route('dashboardmahasiswa');
         }
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Gagal menghubungi server.')->withInput();
     }
+
+    return back()->withErrors(['login' => 'Email atau password salah']);
 }
+
 
 
          public function showRegisterForm()
@@ -86,4 +90,15 @@ return back()->withErrors($errors)->withInput();
 
     }
 }
+
+public function logout(Request $request)
+{
+    // Hapus semua data session
+    $request->session()->forget(['token', 'user']);
+    $request->session()->flush(); // opsional: hapus semua session
+
+    // Redirect ke halaman login
+    return redirect()->route('login')->with('success', 'Berhasil logout');
+}
+
 }

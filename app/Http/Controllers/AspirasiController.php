@@ -2,50 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Aspirasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class AspirasiController extends Controller
 {
-    public function index()
-    {
-                // Ambil data dari API (contoh: internal REST API lokal)
-                $response = Http::get('http://localhost:8080/aspirasi');
 
-                // Cek kalau berhasil
-                if ($response->successful()) {
-                    $aspirasis = $response->json(); // ambil data JSON dari API
-                } else {
-                    $aspirasis = []; // fallback kalau gagal
-                }
-        return view('mahasiswa.aspirasi', [
-            'aspirasis' => $aspirasis
-        ]);
+
+public function index()
+{
+    $token = session("token");
+    if (!$token) {
+        return redirect()->route('login')->with('error', 'Token tidak ditemukan');
     }
 
+    $response = Http::withToken($token)->get('http://localhost:8080/mahasiswa/aspirasi');
+
+    if ($response->status() === 401) {
+        return redirect()->route('login')->with('error', 'Sesi telah habis, silakan login kembali.');
+    }
+
+    if ($response->successful()) {
+        $json = $response->json();
+        $aspirasis = $json['aspirasi'];
+    } else {
+        $aspirasis = [];
+        logger()->error('Gagal ambil aspirasi: ' . $response->body());
+    }
+
+    return view('mahasiswa.aspirasi', [
+        'aspirasis' => $aspirasis,
+    ]);
+}
+
     public function create(){
-        $response = Http::get('http://localhost:8080/unit');
+    $token = session("token");
+
+        $response = Http::withToken($token)->get('http://localhost:8080/mahasiswa/unit');
         if ($response->successful()) {
             $unit = $response->json(); // ambil data JSON dari API
         } else {
             $unit = []; // fallback kalau gagal
         }
         return view('mahasiswa.tambahAspirasi',[
-            'unit' => $unit
+            'unit' => $unit,
         ]);
     }
 
     public function store(Request $request){
+    $token = session("token");
+    $user = session("user");
+
         $validate = $request->validate([
-            'mahasiswa_nim' => 'required',
             'isi' => 'required',
             'unit_id' => 'required'
         ]);
 
         $validate['status']  = 'belum diproses';
+        $validate['user_id']  = $user['id'];
 
-        $response = Http::post('http://localhost:8080/aspirasi', $validate);
+        $response = Http::withToken($token)->post('http://localhost:8080/mahasiswa/aspirasi', $validate);
 
         if ($response->successful()) {
             return redirect()->route('aspirasi.index')->with('success', 'Data berhasil ditambahkan!');
@@ -55,7 +71,9 @@ class AspirasiController extends Controller
     }
 
     public function show($id){
-                $response = Http::get("http://localhost:8080/aspirasi/{$id}");
+    $token = session("token");
+    $user = session("user");
+                $response = Http::withToken($token)->get("http://localhost:8080/mahasiswa/aspirasi/{$id}");
 
                 // Cek kalau berhasil
                 if ($response->successful()) {
@@ -71,8 +89,10 @@ class AspirasiController extends Controller
     }
 
     public function edit($id){
-        $response_aspirasi = Http::get("http://localhost:8080/aspirasi/{$id}/edit");
-        $response_unit = Http::get('http://localhost:8080/unit');
+    $token = session("token");
+
+        $response_aspirasi = Http::withToken($token)->get("http://localhost:8080/mahasiswa/aspirasi/{$id}/edit");
+        $response_unit = Http::withToken($token)->get('http://localhost:8080/mahasiswa/unit');
 
         $aspirasi = $response_aspirasi->json();
         $unit = $response_unit->json();
@@ -84,20 +104,26 @@ class AspirasiController extends Controller
     }
 
     public function update(Request $request, $id){
+    $token = session("token");
+    $user = session("user");
+
+
         $validate = $request->validate([
-            'mahasiswa_nim' => 'required',
             'isi' => 'required',
             'unit_id' => 'required'
         ]);
 
         $validate['status']  = 'belum diproses';
+        $validate['user_id']  = $user['id'];
 
-        Http::put("http://localhost:8080/aspirasi/{$id}", $validate);
+
+        Http::withToken($token)->put("http://localhost:8080/mahasiswa/aspirasi/{$id}", $validate);
         return redirect()->route('aspirasi.index')->with('success', 'Data berhasil diedit!');
     } 
 
     public function destroy($id){
-        $respon = Http::delete("http://localhost:8080/aspirasi/{$id}");
+    $token = session("token");
+        $respon = Http::withToken($token)->delete("http://localhost:8080/mahasiswa/aspirasi/{$id}");
         if($respon->status() === 404){
         return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
         } else {

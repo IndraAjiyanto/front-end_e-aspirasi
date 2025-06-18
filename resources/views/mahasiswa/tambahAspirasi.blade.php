@@ -44,13 +44,6 @@
               <label for="isi" class="form-label">Isi Aspirasi</label>
               <textarea id="isi" name="isi" rows="4" class="form-control" placeholder="Tulis aspirasi kamu..." required></textarea>
             </div>
-            <div class="mb-3">
-              <label for="mahasiswa_nim" class="form-label">NIM Mahasiswa</label>
-              <input type="text" id="mahasiswa_nim" name="mahasiswa_nim" class="form-control @error('mahasiswa_nim') is-invalid @enderror" value="{{ old('mahasiswa_nim') }}" required>
-              @error('mahasiswa_nim')
-                <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
             <div class="d-flex justify-content-between mt-4">
             <a href="{{ route('aspirasi.index') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left-circle"></i> Kembali ke Beranda

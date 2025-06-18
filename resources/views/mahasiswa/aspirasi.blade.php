@@ -11,7 +11,7 @@
 
         <!-- Tombol Tambah Aspirasi dan kembali -->
         <div class="mb-4 d-flex gap-2">
-            <a href="/navbar" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ route('dashboardmahasiswa') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Kembali ke Menu Awal
             </a>
 
@@ -22,34 +22,39 @@
 
         <!-- Modal Tambah Aspirasi -->
         <!-- Daftar Aspirasi -->
-        <div class="row mt-3">
-            @foreach($aspirasis as $aspirasi)
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card p-3">
-                    
-                    <h6>
-                        <i class="bi bi-building"></i> {{ $aspirasi['unit_nama'] }}
+<div class="row mt-3">
+    @forelse($aspirasis as $aspirasi)
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card p-3">
+                <h6>
+                    <i class="bi bi-building"></i> {{ $aspirasi['unit_nama'] }}
 
-                        @if ($aspirasi['status'] == 'dibalas')
+                    @if ($aspirasi['status'] == 'dibalas')
                         <span class="badge bg-success ms-2">
-                        <i class="bi bi-check-circle-fill"></i> Terkonfirmasi
+                            <i class="bi bi-check-circle-fill"></i> Terkonfirmasi
                         </span>
-                        @elseif ($aspirasi['status'] == 'diproses')
+                    @elseif ($aspirasi['status'] == 'diproses')
                         <span class="badge bg-primary ms-2">
-                        <i class="bi bi-clock-fill"></i> Diproses
+                            <i class="bi bi-clock-fill"></i> Diproses
                         </span>
-                        @endif
-                    </h6>
+                    @endif
+                </h6>
 
-                    <p>{{ Str::limit($aspirasi['isi'], 20) }}...</p>
-                    <a href="{{ route('aspirasi.show', $aspirasi['id']) }}" class="btn btn-sm btn-outline-info">
-                        <i class="bi bi-eye"></i> Lihat Detail
-                    </a>
-                </div>
-                </div>
-                @endforeach
+                <p>{{ Str::limit($aspirasi['isi'], 20) }}...</p>
+                <a href="{{ route('aspirasi.show', $aspirasi['id']) }}" class="btn btn-sm btn-outline-info">
+                    <i class="bi bi-eye"></i> Lihat Detail
+                </a>
             </div>
         </div>
+    @empty
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <i class="bi bi-exclamation-circle"></i> Belum ada aspirasi yang tersedia.
+            </div>
+        </div>
+    @endforelse
+</div>
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script>
