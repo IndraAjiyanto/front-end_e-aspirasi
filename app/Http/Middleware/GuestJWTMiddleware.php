@@ -2,22 +2,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
-class JWTAuth
+class GuestJWTMiddleware
 {
-    public function handle($request, Closure $next, $role = null)
+    public function handle(Request $request, Closure $next)
     {
-        $token = session('token');
+        // Jika sudah login (ada session token dan user)
+        if (session('token') && session('user')) {
+            $role = session('user')['role'] ?? null;
 
-        if (!$token) {
-            return redirect('/login');
-        }
-
-        $payload = json_decode(base64_decode(explode('.', $token)[1]), true);
-
-        if ($role && $payload['role'] !== $role) {
-            // Redirect ke dashboard sesuai role
-            switch ($payload['role']) {
+            // Redirect berdasarkan role
+            switch ($role) {
                 case 'mahasiswa':
                     return redirect()->route('dashboardmahasiswa');
                 case 'ppks':
@@ -27,10 +23,10 @@ class JWTAuth
                 case 'akademik':
                     return redirect()->route('dashboardakademik');
                 default:
-                    return redirect('/');
+                    return redirect('/'); // fallback
             }
         }
 
-        return $next($request);
+        return $next($request); // lanjut akses login/register
     }
 }

@@ -30,11 +30,13 @@ Route::get('/', fn () => view('welcome'));
 // ===============================
 // AUTHENTIKASI (Login & Register)
 // ===============================
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::middleware('guest.jwt')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+});
 Route::post('/login/proses', [AuthController::class, 'proses'])->name('login.proses');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/daftar', [AuthController::class, 'daftar'])->name('daftar');
 
 // Navbar (Mahasiswa saja)
