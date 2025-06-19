@@ -12,7 +12,6 @@ class AkademikController extends Controller
     $token = session("token");
     $user = session("user");
         $respon = Http::withToken($token)->get("http://localhost:8080/akademik/aspirasi/all/{$user['id']}");
-        // $respon = Http::withToken($token)->get("http://10.10.10.164/akademik/aspirasi/all/{$user['id']}");
         $data = $respon->json();
         $akademik = $data['aspirasi'];
 

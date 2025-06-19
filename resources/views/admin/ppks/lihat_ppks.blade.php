@@ -20,7 +20,7 @@
 
         <form action="{{route('ppks.jawaban.store')}}" method="POST">
           @csrf
-          <input type="text" name="aspirasi_id" value="{{$aspirasi['id']}}">
+          <input type="hidden" name="aspirasi_id" value="{{$aspirasi['id']}}">
           <label class="form-label fw-semibold text-muted">Balas Laporan</label>
           <textarea name="isi" class="form-control" rows="3" placeholder="Tulis balasan..." required></textarea>
 
