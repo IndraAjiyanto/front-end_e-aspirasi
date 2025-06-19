@@ -15,7 +15,7 @@
     </div>
 
     <div class="mb-4 d-flex gap-2">
-    <a href="/dashboard" class="btn btn-outline-secondary btn-sm">
+    <a href="{{ route('dashboardakademik') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-arrow-left"></i> Kembali ke Menu Awal
           </a>
           </div>
